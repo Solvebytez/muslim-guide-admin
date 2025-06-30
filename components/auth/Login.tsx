@@ -50,13 +50,13 @@ function Login() {
       const response = await axiosInstance.post("/admin-login", {
         email: value.email,
         password: value.password,
-        adminToken: jwtToken,
+        adminToken: "5ea4f327f58822fe82722ce8c9fdec1016ef6f5c2ffb12784a9028e4f3eb18ee",
       });
       console.log(response);
       if (response.status === 200) {
         if(typeof window !== 'undefined') {
 
-            // window.location.href = "/dashboard"
+           // window.location.href = "/dashboard"
         }
       } else {
         setError("Something went wrong");

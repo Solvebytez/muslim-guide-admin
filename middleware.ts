@@ -4,10 +4,15 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const authRoutes = ["/login", "/signup", "/forgot-password"];
   const protectedRoutes = ["/activeuser", "/dashboard"];
+console.log("🍪 All cookies in middleware:");
+  request.cookies.getAll().forEach((cookie) =>
+  console.log(`${cookie.name}: ${cookie.value}`)
+);
+
   const refreshToken = request.cookies.get("isl_admin_refresh_token")?.value;
 
   console.log("➡ Pathname:", pathname);
-  console.log("➡➡➡➡➡➡➡➡➡➡➡➡➡➡ Has refreshToken:", !!refreshToken);
+  console.log("➡➡➡➡➡➡➡➡➡➡➡➡➡➡ Has refreshToken:", !!refreshToken, request.cookies.get("isl_admin_refresh_token")?.value);
 
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     if (!refreshToken) {
