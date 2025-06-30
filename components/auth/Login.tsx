@@ -56,7 +56,7 @@ function Login() {
       if (response.status === 200) {
         if(typeof window !== 'undefined') {
 
-           // window.location.href = "/dashboard"
+            window.location.href = "/dashboard"
         }
       } else {
         setError("Something went wrong");
