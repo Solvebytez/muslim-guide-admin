@@ -7,7 +7,9 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 
 
 const axiosInstance = axios.create({
- baseURL: "https://muslim-guide-apl7.onrender.com/api/v1/",
+ baseURL: process.env.NODE_ENV === 'production'
+    ? "https://muslim-guide-apl7.onrender.com/api/v1/"
+    : "http://localhost:5000/api/v1/",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
