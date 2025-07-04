@@ -57,7 +57,7 @@ function Login() {
         console.log(response.data.data);
         if(typeof window !== 'undefined') {
 
-           // window.location.href = "/dashboard"
+            window.location.href = "/dashboard"
         }
       } else {
         setError("Something went wrong");
