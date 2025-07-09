@@ -39,11 +39,18 @@ export const useGetuser = () => {
       }
 
       if (response.status === 401) {
-        console.log("401 - Unauthorized")
+        console.log("401 - Unauthorized")       
         setUser(null)
       }
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error fetching user:", error)
+      //  if (error.status === 401) {
+      //   console.log("401 - Unauthorized")
+      //   if(typeof window !== 'undefined') {
+      //     window.location.href = "/login"
+      //   }
+      //   setUser(null)
+      // }
       setUser(null)
     } finally {
       setIsLoding(false)

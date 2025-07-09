@@ -8,6 +8,7 @@ import { useBlockUser, useUnblockUser } from "@/hooks/useDataOverview"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useApproveResturent, useRejectResturent } from "@/hooks/useResturent"
+import EditResturentModal from "@/components/EditResturentModal"
 
 export interface Restaurant {
   _id: string;
@@ -16,6 +17,7 @@ export interface Restaurant {
   contactName: string;
   contactEmail: string;
   cuisine: string[];
+  phoneNumber?: string;
   rating: number;
   distanceUnit: string;
   googleMapsPlaceId: string;
@@ -59,19 +61,63 @@ export const columns: ColumnDef<Restaurant>[] = [
     header: () => <div className="font-bold text-zinc-800 pl-0">Contact Email</div>,
   },
   {
+    accessorKey: "phoneNumber",
+    header: () => <div className="font-bold text-zinc-800 pl-0">Phone</div>,
+  },
+  {
     accessorKey: "cuisine",
     header: () => <div className="font-bold text-zinc-800 pl-0">Cuisine</div>,
+    cell: ({ row }) => {
+    const cuisineText = row.original.cuisine.join(", ")
+    const words = cuisineText.split(" ")
+    const shouldTruncate = words.length > 3
+    const displayText = shouldTruncate ? words.slice(0, 3).join(" ") + "..." : cuisineText
+
+    return (
+      <div className="flex items-center justify-start">
+        {displayText}
+      </div>
+    )
+  },
+  },
+  {
+    accessorKey: "suppliers",
+    header: () => <div className="font-bold text-zinc-800 pl-0">Cuisine</div>,
+    cell: ({ row }) => {
+    const cuisineText = row.original.suppliers.join(", ")
+    const words = cuisineText.split(" ")
+    const shouldTruncate = words.length > 3
+    const displayText = shouldTruncate ? words.slice(0, 3).join(" ") + "..." : cuisineText
+
+    return (
+      <div className="flex items-center justify-start">
+        {displayText}
+      </div>
+    )
+  },
   },
   {
     accessorKey: "rating",
     header: () => <div className="font-bold text-zinc-800 pl-0">Rating</div>,
   },
   {
-    accessorKey: "googleMapsUrl",
-    cell: ({ row }) => 
-    <Link href={row.original.googleMapsUrl} target="_blank" className="rounded-full py-1 px-2 bg-green-600 text-white text-xs"> Google Maps</Link>,
-    header: () => <div className="font-bold text-zinc-800 pl-0">Location</div>,
+  accessorKey: "googleMapsUrl",
+  cell: ({ row }) => {
+    const url = row.original.googleMapsUrl;
+    return url ? (
+      <Link
+        href={url}
+        target="_blank"
+        className="rounded-full py-1 px-2 bg-green-600 text-white text-xs"
+      >
+        Google Maps
+      </Link>
+    ) : (
+      <span className="text-xs text-gray-500">N/A</span>
+    );
   },
+  header: () => <div className="font-bold text-zinc-800 pl-0">Location</div>,
+},
   {
     accessorKey: "isApproved",
     header: () => <div className="font-bold text-zinc-800 pl-0">Status</div>,
@@ -122,6 +168,7 @@ export const columns: ColumnDef<Restaurant>[] = [
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          <EditResturentModal restaurant={row.original} />
             {
                 row.original.isApproved === "pending" && 
                <>

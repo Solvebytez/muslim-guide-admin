@@ -15,10 +15,10 @@ const axiosInstance = axios.create({
 });
 
 // Add request interceptor to ensure credentials
-axiosInstance.interceptors.request.use((config) => {
-  config.withCredentials = true; // Force credentials on all requests
-  return config;
-});
+// axiosInstance.interceptors.request.use((config) => {
+//   config.withCredentials = true; // Force credentials on all requests
+//   return config;
+// });
 
 axiosInstance.interceptors.response.use((response) => {
     return response;

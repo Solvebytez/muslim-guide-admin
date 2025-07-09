@@ -12,7 +12,7 @@ function RejectedTable() {
     if (isLoading) return <div>Loading...</div>
     if (isError) return <div>Error</div>
   
-    console.log("PendingTable", data)
+    console.log("RejectedTable", data)
 
   return (
    <div className="mx-auto pb-10">

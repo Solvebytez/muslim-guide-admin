@@ -47,6 +47,7 @@ export function useRejectResturent() {
     mutationFn: rejectResturent,
     onSuccess: () => {
       // Refresh the list of users
+       queryClient.invalidateQueries({ queryKey: ["pendingTable"] });
       queryClient.invalidateQueries({ queryKey: ["approvedTable"] });     
       queryClient.invalidateQueries({ queryKey: ["rejectedTable"] });
     },
