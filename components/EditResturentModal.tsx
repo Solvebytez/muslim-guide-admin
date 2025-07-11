@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Button } from "./ui/button"
 import { Restaurant } from "@/app/(protected)/resturent/approvedresturent/tableData/column"
 import axiosInstance from "@/lib/axiosInstance"
+import { splitOutsideParentheses } from "@/lib/utils"
 
 const EditResturentModal = ({ restaurant }: { restaurant: Restaurant }) => {
   const [open, setOpen] = useState(false)
@@ -98,7 +99,7 @@ const handleSave = async () => {
     const updatedData = {
       ...editData,
       suppliers: editData.suppliers.split(",").map(item => item.trim()),
-      cuisine: editData.cuisine.split(",").map(item => item.trim())
+     cuisine: splitOutsideParentheses(editData.cuisine)
     }
 
     const response = await axiosInstance.put(`/update-resturent/${restaurant._id}`, updatedData)
@@ -265,3 +266,4 @@ const handleSave = async () => {
 }
 
 export default EditResturentModal
+
