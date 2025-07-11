@@ -82,7 +82,7 @@ export const columns: ColumnDef<Restaurant>[] = [
   },
   {
     accessorKey: "suppliers",
-    header: () => <div className="font-bold text-zinc-800 pl-0">Cuisine</div>,
+    header: () => <div className="font-bold text-zinc-800 pl-0">Suppliers</div>,
     cell: ({ row }) => {
     const cuisineText = row.original.suppliers.join(", ")
     const words = cuisineText.split(" ")
