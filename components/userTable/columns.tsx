@@ -18,7 +18,13 @@ export type UserColumn = {
   name: string
   status: "active" | "blocked" | "success" | "failed"
   email: string
-  role: "user" | "vendor" | "admin"
+  role: "user" | "vendor" | "admin",
+  address?: string,
+  restaurants?: {
+    _id: string
+    name: string
+    userId: string
+  }[]
 }
 
 // Edit User Modal Component
@@ -168,6 +174,35 @@ export const columns: ColumnDef<UserColumn>[] = [
     )
   }
 },
+{
+  accessorKey: "restaurants",
+  header: () => <div className="font-bold text-zinc-800 pl-0">Business Name</div>,
+  cell: ({ row }) => {
+    const restaurants = row.getValue("restaurants") as { name: string }[] || [];
+
+    return (
+      <div className="flex flex-col">
+        {restaurants.length > 0 ? (
+          restaurants.map((restaurant, index) => (
+            <span key={index} className="text-sm text-gray-600">
+              {restaurant.name}
+            </span>
+          ))
+        ) : (
+          <span className="text-sm text-gray-400">No Business</span>
+        )}
+      </div>
+    );
+  }
+},
+  {
+    accessorKey: "address",
+    header: () => <div className="font-bold text-zinc-800 pl-0">Address</div>,
+    cell: ({ row }) => {
+      const address: string = row.getValue("address") || "No Address Provided";
+      return <span className="text-sm text-gray-600">{address}</span>;
+    }
+  },
   {
     accessorKey: "status",
      enableSorting: true, // ✅ enable sorting
